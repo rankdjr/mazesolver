@@ -41,10 +41,37 @@ class Cell:
         
         fill_color = "gray" if undo == True else "red"
         
-        start_cx, start_cy = self.get_center_coords()
-        end_cx, end_cy = to_cell.get_center_coords()
+        self_x_mid, self_y_mid = self.get_center_coords()
+        end_x_mid, end_y_mid = to_cell.get_center_coords()
         
-        line = Line(Point(start_cx, start_cy), Point(end_cx, end_cy))
-        self.__win.draw_line(line, fill_color)
+        # Moves will be rendered in half steps
+        # Moving Left
+        if self.__x1 > to_cell.__x1:
+            line = Line(Point(self.__x1, self_y_mid), Point(self_x_mid, self_y_mid))
+            self.__win.draw_line(line, fill_color)
+            line = Line(Point(end_x_mid, end_y_mid), Point(to_cell.__x2, end_y_mid))
+            self.__win.draw_line(line, fill_color)
+
+        # moving right
+        elif self.__x1 < to_cell.__x1:
+            line = Line(Point(self_x_mid, self_y_mid), Point(self.__x2, self_y_mid))
+            self.__win.draw_line(line, fill_color)
+            line = Line(Point(to_cell.__x1, end_y_mid), Point(end_x_mid, end_y_mid))
+            self.__win.draw_line(line, fill_color)
+
+        # moving up
+        elif self.__y1 > to_cell.__y1:
+            line = Line(Point(self_x_mid, self_y_mid), Point(self_x_mid, self.__y1))
+            self.__win.draw_line(line, fill_color)
+            line = Line(Point(end_x_mid, to_cell._y2), Point(end_x_mid, end_y_mid))
+            self.__win.draw_line(line, fill_color)
+
+        # moving down
+        elif self.__y1 < to_cell.__y1:
+            line = Line(Point(self_x_mid, self_y_mid), Point(self_x_mid, self.__y2))
+            self.__win.draw_line(line, fill_color)
+            line = Line(Point(end_x_mid, end_y_mid), Point(end_x_mid, to_cell.__y1))
+            self.__win.draw_line(line, fill_color)
+        
         
         
