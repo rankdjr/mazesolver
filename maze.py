@@ -4,6 +4,19 @@ import time
 import random
 
 class Maze:
+    """Generates and solves mazes using recursive backtracking.
+
+    Attributes:
+        x1 (int): The x-coordinate of the top-left corner of the maze.
+        y1 (int): The y-coordinate of the top-left corner of the maze.
+        num_rows (int): Number of rows in the maze.
+        num_cols (int): Number of columns in the maze.
+        cell_size_x (int): Width of each cell.
+        cell_size_y (int): Height of each cell.
+        win (Window, optional): The graphical window where the maze is drawn.
+        seed (int, optional): The seed for the random number generator.
+    """
+
     def __init__(
         self,
         x1,
@@ -15,6 +28,7 @@ class Maze:
         win=None,
         seed=None
     ):
+        """Initializes the Maze with given dimensions, window, and optional random seed."""
         self._x1 = x1
         self._y1 = y1
         self._num_rows = num_rows
@@ -31,7 +45,9 @@ class Maze:
         self._break_walls_r(0,0)
         self._reset_cells_visited()
 
+   
     def _create_cells(self):
+        """Creates a grid of Cell objects within the maze."""
         for i in range(self._num_cols):
             cell_col_list = []
             for j in range(self._num_rows):
@@ -42,7 +58,14 @@ class Maze:
             for j in range(self._num_rows):
                 self._draw_cell(i, j)
     
+  
     def _draw_cell(self, i, j):
+        """Draws a single cell based on its grid position.
+
+        Args:
+            i (int): Column index of the cell.
+            j (int): Row index of the cell.
+        """
         if self._win is None:
             return
         
@@ -53,19 +76,30 @@ class Maze:
         self._cells[i][j].draw(x1, y1, x2, y2)
         self._animate()      
 
+   
     def _animate(self):
+        """Redraws the window to animate the maze creation and solving process."""
         if self._win is None:
             return
         self._win.redraw()
         time.sleep(0.05)
     
+    
     def _break_entrance_and_exit(self):
+        """Creates an entrance and exit for the maze by removing specific walls."""
         self._cells[0][0].has_top_wall = False
         self._draw_cell(0, 0)
         self._cells[self._num_cols-1][self._num_rows-1].has_bottom_wall = False
         self._draw_cell(self._num_cols-1, self._num_rows-1)
             
+    
     def _break_walls_r(self, i, j):
+        """Recursively breaks walls between cells to create a maze.
+
+        Args:
+            i (int): Column index of the current cell.
+            j (int): Row index of the current cell.
+        """
         current_cell = self._cells[i][j]
         current_cell.visited = True
 
@@ -116,15 +150,33 @@ class Maze:
             # recursively visit the next cell
             self._break_walls_r(next_index[0], next_index[1])
 
+
     def _reset_cells_visited(self):
+        """Resets the visited status of all cells in preparation for solving the maze."""
         for col in self._cells:
             for cell in col:
                 cell.visited = False
 
+
     def solve(self):
+        """Attempts to solve the maze from the entrance to the exit.
+
+        Returns:
+            bool: True if the maze is solvable, otherwise False.
+        """
         return self._solve_r(0,0)
     
+
     def _solve_r(self, i, j):
+        """Recursively solves the maze using backtracking.
+
+        Args:
+            i (int): Column index of the current cell.
+            j (int): Row index of the current cell.
+
+        Returns:
+            bool: True if a solution has been found, otherwise False.
+        """
         self._animate()
         current_cell = self._cells[i][j]
         current_cell.visited = True
