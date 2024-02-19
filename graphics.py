@@ -76,8 +76,8 @@ class Point:
             x (int): The x-coordinate of the point.
             y (int): The y-coordinate of the point.
         """
-        self.x = x
-        self.y = y
+        self._x = x
+        self._y = y
 
 
 class Line:
@@ -93,8 +93,8 @@ class Line:
             p1 (Point): The start point of the line.
             p2 (Point): The end point of the line.
         """
-        self.p1 = p1
-        self.p2 = p2
+        self._p1 = p1
+        self._p2 = p2
 
 
     def draw(self, canvas, fill_color):
@@ -106,6 +106,6 @@ class Line:
             fill_color (str): The color of the line.
         """
         canvas.create_line(
-            self.p1.x, self.p1.y, self.p2.x, self.p2.y, fill=fill_color, width=2
+            self._p1._x, self._p1._y, self._p2._x, self._p2._y, fill=fill_color, width=2
         )
     

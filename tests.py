@@ -27,17 +27,17 @@ class Tests(unittest.TestCase):
 
     def test_create_point(self):
         point = Point(100, 150)
-        self.assertEqual(point.x, 100)
-        self.assertEqual(point.y, 150)
+        self.assertEqual(point._x, 100)
+        self.assertEqual(point._y, 150)
 
     def test_create_line(self):
         p1 = Point(50, 50)
         p2 = Point(200, 100)
         line = Line(p1, p2)
-        self.assertEqual(line.p1.x, 50)
-        self.assertEqual(line.p1.y, 50)
-        self.assertEqual(line.p2.x, 200)
-        self.assertEqual(line.p2.y, 100)
+        self.assertEqual(line._p1._x, 50)
+        self.assertEqual(line._p1._y, 50)
+        self.assertEqual(line._p2._x, 200)
+        self.assertEqual(line._p2._y, 100)
 
 if __name__ == "__main__":
     import sys
