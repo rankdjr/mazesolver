@@ -1,7 +1,21 @@
 from graphics import Line, Point
 
 class Cell:
+    """Represents a cell in a maze, including its walls, position, and visitation status.
+
+    Attributes:
+        has_left_wall (bool): Indicates if the cell has a left wall.
+        has_right_wall (bool): Indicates if the cell has a right wall.
+        has_top_wall (bool): Indicates if the cell has a top wall.
+        has_bottom_wall (bool): Indicates if the cell has a bottom wall.
+        visited (bool): Indicates if the cell has been visited during maze generation or solving.
+    """
     def __init__(self, win=None):
+        """Initializes a new instance of the Cell class.
+
+        Args:
+            win: The window or graphical context where the cell will be drawn. Optional; defaults to None.
+        """
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -14,6 +28,14 @@ class Cell:
         self.visited = False
 
     def draw(self, x1, y1, x2, y2):
+        """Draws the cell and its walls in the specified graphical window.
+
+        Args:
+            x1 (float): The x-coordinate of the cell's top-left corner.
+            y1 (float): The y-coordinate of the cell's top-left corner.
+            x2 (float): The x-coordinate of the cell's bottom-right corner.
+            y2 (float): The y-coordinate of the cell's bottom-right corner.
+        """
         self._x1 = x1
         self._x2 = x2
         self._y1 = y1
@@ -37,11 +59,22 @@ class Cell:
         self._win.draw_line(bottom_wall, line_color)
 
     def get_center_coords(self):
+        """Calculates and returns the center coordinates of the cell.
+
+        Returns:
+            tuple: The (x, y) coordinates of the cell's center.
+        """
         mid_x = (self._x1 + self._x2) / 2
         mid_y = (self._y1 + self._y2) / 2
         return mid_x, mid_y
 
     def draw_move(self, to_cell, undo=False):
+        """Draws a line representing a move from this cell to another cell.
+
+        Args:
+            to_cell (Cell): The cell to move to.
+            undo (bool): If True, the move is being undone (e.g., for backtracking). Optional; defaults to False.
+        """
         if self._win is None:
             return
         
